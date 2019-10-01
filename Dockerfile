@@ -38,7 +38,7 @@ RUN wget -qO- "https://github.com/commercialhaskell/stack/releases/download/v${S
     echo "system-ghc: true" >/etc/stack/config.yaml && \
     export STACK_ROOT=/usr/local/lib/stack
 
-ARG LTS_SLUG=lts-14.0
+ARG LTS_SLUG=lts-14.7
 
 RUN stack -v --resolver="${LTS_SLUG}" --local-bin-path=/usr/local/bin install \
         cabal-install happy alex cpphs hscolour hlint hindent && \

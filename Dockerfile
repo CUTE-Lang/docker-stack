@@ -25,7 +25,8 @@ RUN echo "deb http://ppa.launchpad.net/hvr/ghc/ubuntu bionic main" >>/etc/apt/so
     apt-get install -y --no-install-recommends \
         ghc-$GHC_VERSION ghc-$GHC_VERSION-htmldocs \
         g++ gcc libc6-dev libffi-dev libgmp-dev make xz-utils zlib1g-dev git gnupg \
-        libtinfo-dev && \
+        libtinfo-dev \
+        openssh-client && \
     rm -rf /var/lib/apt/lists/* && \
     ln -s ghc /opt/ghc/$GHC_VERSION/share/doc/ghc-$GHC_VERSION
 

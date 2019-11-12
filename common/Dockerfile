@@ -30,21 +30,5 @@ RUN echo "deb http://ppa.launchpad.net/hvr/ghc/ubuntu bionic main" >>/etc/apt/so
     rm -rf /var/lib/apt/lists/* && \
     ln -s ghc /opt/ghc/$GHC_VERSION/share/doc/ghc-$GHC_VERSION
 
-ARG STACK_VERSION=1.9.3
-
-RUN wget -qO- "https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/stack-${STACK_VERSION}-linux-x86_64-static.tar.gz" | \
-        tar xz --wildcards --strip-components=1 -C /usr/local/bin '*/stack' && \
-    mkdir /etc/stack/ && \
-    echo "system-ghc: true" >/etc/stack/config.yaml && \
-    export STACK_ROOT=/usr/local/lib/stack
-
-ARG LTS_SLUG=lts-14.7
-
-RUN stack -v --resolver="${LTS_SLUG}" --local-bin-path=/usr/local/bin install \
-        cabal-install happy alex cpphs hscolour hlint hindent && \
-    cd ${STACK_ROOT} && \
-    find . -type f -not -path './snapshots/*/share/*' -exec rm '{}' \; && \
-    find . -type d -print0 | sort -rz | xargs -0 rmdir 2>/dev/null || true
-
 ENTRYPOINT ["/usr/local/sbin/pid1"]
 CMD ["bash"]
